@@ -1,4 +1,4 @@
-package br.com.cinedk.filmes.backendcinedk.config.domain;
+package br.com.cinedk.filmes.backendcinedk.domain;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -8,28 +8,30 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
-
-@Entity(name = "tb_filme")
-public class Movie implements Serializable{
+@Entity(name = "tb_sala")
+public class Room implements Serializable{
 	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column
-	private String title;
+	private Integer nSeating;
 	@Column
-	private Integer duration;
-	
-	public Movie() {
+	private String screenType;
+	@Column
+	private String location;
+
+	public Room() {
 		
 	}
 
-	public Movie(Long id, String title, Integer duration) {
+	public Room(Long id, Integer nSeating, String screenType, String location) {
 		super();
 		this.id = id;
-		this.title = title;
-		this.duration = duration;
+		this.nSeating = nSeating;
+		this.screenType = screenType;
+		this.location = location;
 	}
 
 	public Long getId() {
@@ -40,20 +42,28 @@ public class Movie implements Serializable{
 		this.id = id;
 	}
 
-	public String getTitle() {
-		return title;
+	public Integer getnSeating() {
+		return nSeating;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setnSeating(Integer nSeating) {
+		this.nSeating = nSeating;
 	}
 
-	public Integer getDuration() {
-		return duration;
+	public String getScreenType() {
+		return screenType;
 	}
 
-	public void setDuration(Integer duration) {
-		this.duration = duration;
+	public void setScreenType(String screenType) {
+		this.screenType = screenType;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
 	@Override
@@ -69,10 +79,8 @@ public class Movie implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Movie other = (Movie) obj;
+		Room other = (Room) obj;
 		return Objects.equals(id, other.id);
 	}
 
-	
-	
 }

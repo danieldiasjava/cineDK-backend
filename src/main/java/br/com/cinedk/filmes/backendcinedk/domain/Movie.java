@@ -1,4 +1,4 @@
-package br.com.cinedk.filmes.backendcinedk.config.domain;
+package br.com.cinedk.filmes.backendcinedk.domain;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -9,27 +9,27 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-@Entity(name = "tb_ator")
-public class Actor implements Serializable{
+
+@Entity(name = "tb_filme")
+public class Movie implements Serializable{
 	private static final long serialVersionUID = 1L;
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column
-	private String name;
+	private String title;
 	@Column
-	private String actorrole;
+	private Integer duration;
 	
-	public Actor() {
+	public Movie() {
 		
 	}
 
-	public Actor(Long id, String name, String actorrole) {
+	public Movie(Long id, String title, Integer duration) {
 		super();
 		this.id = id;
-		this.name = name;
-		this.actorrole = actorrole;
+		this.title = title;
+		this.duration = duration;
 	}
 
 	public Long getId() {
@@ -40,20 +40,20 @@ public class Actor implements Serializable{
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public String getActorrole() {
-		return actorrole;
+	public Integer getDuration() {
+		return duration;
 	}
 
-	public void setActorrole(String actorrole) {
-		this.actorrole = actorrole;
+	public void setDuration(Integer duration) {
+		this.duration = duration;
 	}
 
 	@Override
@@ -69,9 +69,10 @@ public class Actor implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Actor other = (Actor) obj;
+		Movie other = (Movie) obj;
 		return Objects.equals(id, other.id);
 	}
+
 	
 	
 }
