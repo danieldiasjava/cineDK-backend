@@ -1,19 +1,15 @@
 package br.com.cinedk.filmes.backendcinedk.domain.enums;
 
 public enum EnumGenreFilm {
-	
-	ACAO(1),
-	AVENTURA(2),
-	SUSPENSE(3),
-	COMEDIA(4),
-	DRAMA(5);
-	
+
+	ACAO(1), AVENTURA(2), SUSPENSE(3), COMEDIA(4), DRAMA(5);
+
 	private int code;
-	
+
 	private EnumGenreFilm(int code) {
 		this.code = code;
 	}
-	
+
 	public int getCode() {
 		return code;
 	}
@@ -26,5 +22,5 @@ public enum EnumGenreFilm {
 		}
 		throw new IllegalArgumentException("Invalid GenreFilm code");
 	}
-	
+
 }
