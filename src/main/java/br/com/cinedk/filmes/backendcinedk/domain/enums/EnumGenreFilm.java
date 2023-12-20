@@ -2,7 +2,7 @@ package br.com.cinedk.filmes.backendcinedk.domain.enums;
 
 public enum EnumGenreFilm {
 
-	ACAO(1), AVENTURA(2), SUSPENSE(3), COMEDIA(4), DRAMA(5);
+	ACAO(0), AVENTURA(1), SUSPENSE(2), COMEDIA(3), DRAMA(4);
 
 	private int code;
 

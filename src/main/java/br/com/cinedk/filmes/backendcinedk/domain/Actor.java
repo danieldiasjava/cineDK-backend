@@ -1,18 +1,23 @@
 package br.com.cinedk.filmes.backendcinedk.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 
 @Entity(name = "tb_ator")
-public class Actor implements Serializable{
+public class Actor implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -21,10 +26,14 @@ public class Actor implements Serializable{
 	@Column
 	private String actorrole;
 	
+	@ManyToMany(mappedBy = "actors")
+	private List<Movie> movies = new ArrayList<>();
+
 	public Actor() {
-		
+
 	}
 
+	@JsonCreator
 	public Actor(Long id, String name, String actorrole) {
 		super();
 		this.id = id;
@@ -56,6 +65,15 @@ public class Actor implements Serializable{
 		this.actorrole = actorrole;
 	}
 
+	public List<Movie> getMovies() {
+		return movies;
+	}
+
+	public void setMovies(List<Movie> movies) {
+		this.movies = movies;
+	}
+
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -72,6 +90,5 @@ public class Actor implements Serializable{
 		Actor other = (Actor) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
+
 }
