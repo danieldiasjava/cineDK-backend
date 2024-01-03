@@ -6,12 +6,17 @@ import java.util.List;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 
 @Entity(name = "tb_ator")
@@ -20,13 +25,16 @@ public class Actor implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long actorID;
 	@Column
 	private String name;
 	@Column
 	private String actorrole;
-	
-	@ManyToMany(mappedBy = "actors")
+
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "FILME_ATOR", 
+	joinColumns = @JoinColumn(name = "actor_id"), 
+	inverseJoinColumns = @JoinColumn(name = "movie_id"))
 	private List<Movie> movies = new ArrayList<>();
 
 	public Actor() {
@@ -34,19 +42,19 @@ public class Actor implements Serializable {
 	}
 
 	@JsonCreator
-	public Actor(Long id, String name, String actorrole) {
+	public Actor(@JsonProperty Long actorID, String name, String actorrole) {
 		super();
-		this.id = id;
+		this.actorID = actorID;
 		this.name = name;
 		this.actorrole = actorrole;
 	}
 
-	public Long getId() {
-		return id;
+	public Long getActorID() {
+		return actorID;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setActorID(Long actorID) {
+		this.actorID = actorID;
 	}
 
 	public String getName() {
@@ -65,6 +73,7 @@ public class Actor implements Serializable {
 		this.actorrole = actorrole;
 	}
 
+	@JsonIgnore
 	public List<Movie> getMovies() {
 		return movies;
 	}
@@ -73,10 +82,9 @@ public class Actor implements Serializable {
 		this.movies = movies;
 	}
 
-
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(actorID);
 	}
 
 	@Override
@@ -88,7 +96,7 @@ public class Actor implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Actor other = (Actor) obj;
-		return Objects.equals(id, other.id);
+		return Objects.equals(actorID, other.actorID);
 	}
 
 }

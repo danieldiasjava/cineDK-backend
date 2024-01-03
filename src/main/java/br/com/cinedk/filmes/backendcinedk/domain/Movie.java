@@ -14,8 +14,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 
 @Entity(name = "tb_filme")
@@ -23,7 +21,7 @@ public class Movie implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long movieId;
 	@Column
 	private String title;
 	@Column
@@ -32,35 +30,36 @@ public class Movie implements Serializable {
 	@Column
 	private Integer enumGenreFilm;
 
-	@ManyToMany
-	@JoinTable(name = "FILME_ATOR", joinColumns = @JoinColumn(name = "movie_id")
-	, inverseJoinColumns = @JoinColumn(name = "ator_id"))
+	@ManyToMany(mappedBy = "movies")
 	private List<Actor> actors = new ArrayList<>();
-	
+
 	@ManyToMany
 	private List<Ticket> tickets = new ArrayList<>();
+
+	@Column
+	private Actor actor;
 
 	public Movie() {
 
 	}
 
 	@JsonCreator
-	public Movie(Long id, String title, Integer duration, @JsonProperty EnumGenreFilm enumGenreFilm) {
+	public Movie(@JsonProperty Long movieId, String title, Integer duration,
+			@JsonProperty EnumGenreFilm enumGenreFilm) {
 		super();
-		this.id = id;
+		this.movieId = movieId;
 		this.title = title;
 		this.duration = duration;
 		setGenreFilm(enumGenreFilm);
-		;
 
 	}
 
-	public Long getId() {
-		return id;
+	public Long getMovieId() {
+		return movieId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setMovieId(Long movieId) {
+		this.movieId = movieId;
 	}
 
 	public String getTitle() {
@@ -89,14 +88,14 @@ public class Movie implements Serializable {
 		}
 	}
 
-	public List<Actor> getActors() {
+	public List<Actor> getActor() {
 		return actors;
 	}
 
-	public void setActors(List<Actor> actors) {
+	public void setActor(List<Actor> actors) {
 		this.actors = actors;
 	}
-	
+
 	public List<Ticket> getTickets() {
 		return tickets;
 	}
@@ -107,7 +106,7 @@ public class Movie implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(movieId);
 	}
 
 	@Override
@@ -119,6 +118,7 @@ public class Movie implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Movie other = (Movie) obj;
-		return Objects.equals(id, other.id);
+		return Objects.equals(movieId, other.movieId);
 	}
+
 }
