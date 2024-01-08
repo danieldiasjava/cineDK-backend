@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import br.com.cinedk.filmes.backendcinedk.domain.Actor;
@@ -42,6 +41,19 @@ public class ActorService {
 	public void delete(Long id) {
 		findById(id);
 		actorRepository.deleteById(id);
+	}
+	
+	public Actor update(long id, Actor obj) {
+		Actor newActor = actorRepository.getReferenceById(id);
+		updateData(newActor, obj);
+		return actorRepository.save(newActor);
+		
+	}
+
+	private void updateData(Actor newActor, Actor obj) {
+		newActor.setName(obj.getName());
+		newActor.setActorrole(obj.getActorrole());
+		
 	}
 
 	@Transactional
